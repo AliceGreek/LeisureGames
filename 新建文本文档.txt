@@ -1,0 +1,365 @@
+package project;
+
+import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.Random;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.Timer;
+
+public class Memory_easy extends JFrame implements ActionListener {
+
+    private int row = 4;
+    private int column = 4;
+    private JLabel showScore;           //分数
+    private JLabel[] labs = new JLabel[row * column];
+    private Boolean[] flags = new Boolean[16];
+    private ImageIcon[] fruit = new ImageIcon[row * column];
+    private ImageIcon[] totalfruit = new ImageIcon[8];
+
+    private JButton btn;
+    private Timer timer;      //计时器(多线程)
+    private int rdIndex;                //产生的随机索引
+    private Random rd = new Random();
+    private boolean show = false;
+
+    private ImageIcon close1 = new ImageIcon("image\\9.png");//初始图片
+    private ImageIcon open1 = new ImageIcon("image\\1.png");
+    private ImageIcon open2 = new ImageIcon("image\\2.png");
+    private ImageIcon open3 = new ImageIcon("image\\3.png");
+    private ImageIcon open4 = new ImageIcon("image\\4.png");
+    private ImageIcon open5 = new ImageIcon("image\\5.png");
+    private ImageIcon open6 = new ImageIcon("image\\6.png");
+    private ImageIcon open7 = new ImageIcon("image\\7.png");
+    private ImageIcon open8 = new ImageIcon("image\\8.png");
+
+    Memory_easy() {
+        this.setBounds(300, 0, 780, 720);
+        this.setTitle("Memory Game");
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.getContentPane().add(getCenter(), BorderLayout.CENTER);
+        this.getContentPane().add(getNorth(), BorderLayout.NORTH);
+        this.setResizable(false);//不能更改窗体大小
+        fruit();
+        this.setVisible(true);
+    }
+
+    private JPanel getCenter() {
+        JPanel p = new JPanel(new GridLayout(row, column));
+        MyMouseListenter1 mgl1 = new MyMouseListenter1();
+        MyMouseListenter2 mgl2 = new MyMouseListenter2();
+        MyMouseListenter3 mgl3 = new MyMouseListenter3();
+        MyMouseListenter4 mgl4 = new MyMouseListenter4();
+        MyMouseListenter5 mgl5 = new MyMouseListenter5();
+        MyMouseListenter6 mgl6 = new MyMouseListenter6();
+        MyMouseListenter7 mgl7 = new MyMouseListenter7();
+        MyMouseListenter8 mgl8 = new MyMouseListenter8();
+        MyMouseListenter9 mgl9 = new MyMouseListenter9();
+        MyMouseListenter10 mgl10 = new MyMouseListenter10();
+        MyMouseListenter11 mgl11 = new MyMouseListenter11();
+        MyMouseListenter12 mgl12 = new MyMouseListenter12();
+        MyMouseListenter13 mgl13 = new MyMouseListenter13();
+        MyMouseListenter14 mgl14 = new MyMouseListenter14();
+        MyMouseListenter15 mgl15 = new MyMouseListenter15();
+        MyMouseListenter16 mgl16 = new MyMouseListenter16();
+
+        //   for (int i = 0; i < row * column; i++) {
+        JLabel lab0 = new JLabel(close1);
+        lab0.addMouseListener(mgl1);
+        p.add(lab0);
+        labs[0] = lab0;
+        JLabel lab1 = new JLabel(close1);
+        lab1.addMouseListener(mgl2);
+        p.add(lab1);
+        labs[1] = lab1;
+
+        JLabel lab2 = new JLabel(close1);
+        lab2.addMouseListener(mgl3);
+        p.add(lab2);
+        labs[2] = lab2;
+
+        JLabel lab3 = new JLabel(close1);
+        lab3.addMouseListener(mgl4);
+        p.add(lab3);
+        labs[3] = lab3;
+
+        JLabel lab4 = new JLabel(close1);
+        lab4.addMouseListener(mgl5);
+        p.add(lab4);
+        labs[4] = lab4;
+
+        JLabel lab5 = new JLabel(close1);
+        lab5.addMouseListener(mgl6);
+        p.add(lab5);
+        labs[5] = lab5;
+
+        JLabel lab6 = new JLabel(close1);
+        lab6.addMouseListener(mgl7);
+        p.add(lab6);
+        labs[6] = lab6;
+
+        JLabel lab7 = new JLabel(close1);
+        lab7.addMouseListener(mgl8);
+        p.add(lab7);
+        labs[7] = lab7;
+
+        JLabel lab8 = new JLabel(close1);
+        lab8.addMouseListener(mgl9);
+        p.add(lab8);
+        labs[8] = lab8;
+
+        JLabel lab9 = new JLabel(close1);
+        lab9.addMouseListener(mgl10);
+        p.add(lab9);
+        labs[9] = lab9;
+
+        JLabel lab10 = new JLabel(close1);
+        lab10.addMouseListener(mgl11);
+        p.add(lab10);
+        labs[10] = lab10;
+
+        JLabel lab11 = new JLabel(close1);
+        lab11.addMouseListener(mgl12);
+        p.add(lab11);
+        labs[11] = lab11;
+
+        JLabel lab12 = new JLabel(close1);
+        lab12.addMouseListener(mgl13);
+        p.add(lab12);
+        labs[12] = lab12;
+
+        JLabel lab13 = new JLabel(close1);
+        lab13.addMouseListener(mgl14);
+        p.add(lab13);
+        labs[13] = lab13;
+
+        JLabel lab14 = new JLabel(close1);
+        lab14.addMouseListener(mgl15);
+        p.add(lab14);
+        labs[14] = lab14;
+
+        JLabel lab15 = new JLabel(close1);
+        lab15.addMouseListener(mgl16);
+        p.add(lab15);
+        labs[15] = lab15;
+
+        // }
+        return p;
+    }
+
+    private void fruit() {
+        int k = 0;
+        int count = 0;
+        for (int j = 0; j <16; j++) {
+            flags[j] = true;
+        }   
+        totalfruit[0] = open1;
+        totalfruit[1] = open2;
+        totalfruit[2] = open3;
+        totalfruit[3] = open4;
+        totalfruit[4] = open5;
+        totalfruit[5] = open6;
+        totalfruit[6] = open7;
+        totalfruit[7] = open8;
+
+        for (k = 0; k < 8; k++) { 
+           
+            while (count < 2) {
+              
+                rdIndex = rd.nextInt(row * column);
+                if (flags[rdIndex]) {
+                    fruit[rdIndex] = totalfruit[k];
+                    flags[rdIndex] = false;
+                    count++;
+       }          
+            }
+        }
+        }
+    
+
+    private JPanel getNorth() {
+        FlowLayout fl = new FlowLayout(FlowLayout.RIGHT, 250, 10);
+        JPanel p = new JPanel(fl);
+        btn = new JButton("开始");
+        btn.addActionListener(this);        //为按钮注册点击事件的处理者
+        p.add(btn);
+        showScore = new JLabel();
+        showScore.setText("分数：");
+        p.add(showScore);
+        return p;
+    }
+
+    public static void main(String[] args) {
+        new Memory_easy();
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (btn.getText().equals("开始")) {
+//            timer.start();
+            btn.setText("暂停");
+        } else if (btn.getText().equals("暂停")) {
+            btn.setText("开始");
+            //          timer.stop();
+
+        }
+
+    }
+
+    class MyMouseListenter1 extends MouseAdapter {
+
+        public void mouseClicked(MouseEvent e) {
+            //如果能确定事件源的真实类型，则可以强转
+            JLabel lab0 = (JLabel) e.getSource();
+            labs[0].setIcon(fruit[0]);
+        }
+
+    }
+
+    class MyMouseListenter2 extends MouseAdapter {
+
+        public void mouseClicked(MouseEvent e) {
+            //如果能确定事件源的真实类型，则可以强转
+            JLabel lab1 = (JLabel) e.getSource();
+            labs[1].setIcon(fruit[1]);
+        }
+    }
+
+    class MyMouseListenter3 extends MouseAdapter {
+
+        public void mouseClicked(MouseEvent e) {
+            //如果能确定事件源的真实类型，则可以强转
+            JLabel lab2 = (JLabel) e.getSource();
+            labs[2].setIcon(fruit[2]);
+        }
+    }
+
+    class MyMouseListenter4 extends MouseAdapter {
+
+        public void mouseClicked(MouseEvent e) {
+            //如果能确定事件源的真实类型，则可以强转
+            JLabel lab3 = (JLabel) e.getSource();
+            labs[3].setIcon(fruit[3]);
+        }
+    }
+
+    class MyMouseListenter5 extends MouseAdapter {
+
+        public void mouseClicked(MouseEvent e) {
+            //如果能确定事件源的真实类型，则可以强转
+            JLabel lab4 = (JLabel) e.getSource();
+            labs[4].setIcon(fruit[4]);
+        }
+    }
+
+    class MyMouseListenter6 extends MouseAdapter {
+
+        public void mouseClicked(MouseEvent e) {
+            //如果能确定事件源的真实类型，则可以强转
+            JLabel lab5 = (JLabel) e.getSource();
+            labs[5].setIcon(fruit[5]);
+        }
+    }
+
+    class MyMouseListenter7 extends MouseAdapter {
+
+        public void mouseClicked(MouseEvent e) {
+            //如果能确定事件源的真实类型，则可以强转
+            JLabel lab6 = (JLabel) e.getSource();
+            labs[6].setIcon(fruit[6]);
+        }
+    }
+
+    class MyMouseListenter8 extends MouseAdapter {
+
+        public void mouseClicked(MouseEvent e) {
+            //如果能确定事件源的真实类型，则可以强转
+            JLabel lab7 = (JLabel) e.getSource();
+            labs[7].setIcon(fruit[7]);
+        }
+    }
+
+    class MyMouseListenter9 extends MouseAdapter {
+
+        public void mouseClicked(MouseEvent e) {
+            //如果能确定事件源的真实类型，则可以强转
+            JLabel lab8 = (JLabel) e.getSource();
+            labs[8].setIcon(fruit[8]);
+        }
+    }
+
+    class MyMouseListenter10 extends MouseAdapter {
+
+        public void mouseClicked(MouseEvent e) {
+            //如果能确定事件源的真实类型，则可以强转
+            JLabel lab9 = (JLabel) e.getSource();
+            labs[9].setIcon(fruit[9]);
+        }
+    }
+
+    class MyMouseListenter11 extends MouseAdapter {
+
+        public void mouseClicked(MouseEvent e) {
+            //如果能确定事件源的真实类型，则可以强转
+            JLabel lab10 = (JLabel) e.getSource();
+            labs[10].setIcon(fruit[10]);
+        }
+    }
+
+    class MyMouseListenter12 extends MouseAdapter {
+
+        public void mouseClicked(MouseEvent e) {
+            //如果能确定事件源的真实类型，则可以强转
+            JLabel lab11 = (JLabel) e.getSource();
+            labs[11].setIcon(fruit[11]);
+        }
+    }
+
+    class MyMouseListenter13 extends MouseAdapter {
+
+        public void mouseClicked(MouseEvent e) {
+            //如果能确定事件源的真实类型，则可以强转
+            JLabel lab12 = (JLabel) e.getSource();
+            labs[12].setIcon(fruit[12]);
+        }
+    }
+
+    class MyMouseListenter14 extends MouseAdapter {
+
+        public void mouseClicked(MouseEvent e) {
+            //如果能确定事件源的真实类型，则可以强转
+            JLabel lab13 = (JLabel) e.getSource();
+            labs[13].setIcon(fruit[13]);
+        }
+    }
+
+    class MyMouseListenter15 extends MouseAdapter {
+
+        public void mouseClicked(MouseEvent e) {
+            //如果能确定事件源的真实类型，则可以强转
+            JLabel lab14 = (JLabel) e.getSource();
+            labs[14].setIcon(fruit[14]);
+        }
+    }
+
+    class MyMouseListenter16 extends MouseAdapter {
+
+        public void mouseClicked(MouseEvent e) {
+            //如果能确定事件源的真实类型，则可以强转
+            JLabel lab15 = (JLabel) e.getSource();
+            labs[15].setIcon(fruit[15]);
+        }
+    }
+
+}
